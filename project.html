@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loyiha | Sardorxon Valiyev</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="preloader" id="preloader">
+  <div class="preloader-inner">
+    <div class="preloader-name">Sardorxon<span class="accent-text">.</span></div>
+    <div class="preloader-bar"><span id="preloader-fill"></span></div>
+    <div class="preloader-count"><span id="preloader-num">0</span>%</div>
+  </div>
+  <div class="preloader-panel panel-left"></div>
+  <div class="preloader-panel panel-right"></div>
+</div>
+
+<div class="cursor-pointer" id="cursor-pointer">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 3l15 6.5-6.4 2.1L11 18z"/></svg>
+</div>
+<div class="cursor-ring" id="cursor-ring"><span id="cursor-label"></span></div>
+
+<div class="progress-bar" id="progress-bar"></div>
+
+<div class="bg-blobs" id="bg-blobs">
+  <span class="blob blob-1"></span>
+  <span class="blob blob-2"></span>
+  <span class="blob blob-3"></span>
+</div>
+<div class="grain"></div>
+
+<header class="navbar glass">
+  <a href="index.html" class="logo">S<span>V</span></a>
+  <nav class="nav-links" id="nav-links">
+    <span class="nav-pill" id="nav-pill"></span>
+    <a href="index.html#home" data-i18n-nav="home">Bosh sahifa</a>
+    <a href="index.html#about" data-i18n-nav="about">Men haqimda</a>
+    <a href="index.html#skills" data-i18n-nav="skills">Ko'nikmalar</a>
+    <a href="projects.html" class="active" data-i18n-nav="projects">Loyihalar</a>
+    <a href="index.html#contact" data-i18n-nav="contact">Aloqa</a>
+  </nav>
+  <div class="nav-actions">
+    <div class="lang-switch" id="lang-switch">
+      <button type="button" class="lang-trigger glass" id="lang-trigger">
+        <span id="lang-current">UZ</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="lang-panel">
+        <button type="button" data-locale="uz">O'zbekcha (lotin)</button>
+        <button type="button" data-locale="uz_cyr">Ўзбекча (кирилл)</button>
+        <button type="button" data-locale="en">English</button>
+        <button type="button" data-locale="ru">Русский</button>
+      </div>
+    </div>
+    <button id="theme-toggle" class="icon-btn glass" aria-label="Mode almashtirish">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+    </button>
+    <button id="nav-toggle" class="icon-btn glass burger" aria-label="Menyu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="project-detail">
+  <!-- Filled dynamically -->
+</main>
+
+<footer class="footer glass">
+  <p>© 2026 Sardorxon Valiyev. <span data-i18n="footer_rights">Barcha huquqlar himoyalangan.</span></p>
+</footer>
+
+<script src="i18n.js"></script>
+<script src="script.js"></script>
+<script>
+  function esc(str) {
+    return String(str ?? '').replace(/[&<>"']/g, (c) => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+  }
+
+  const bindings = [];
+  function bindText(el, i18nMap) {
+    if (!el) return;
+    bindings.push({ el, i18nMap: i18nMap || {} });
+    el.textContent = (i18nMap && i18nMap[getLocale()]) || '';
+  }
+  function refreshBindings() {
+    const loc = getLocale();
+    bindings.forEach(({ el, i18nMap }) => { el.textContent = i18nMap[loc] || ''; });
+  }
+
+  function wireCursorLabel(el) {
+    if ('ontouchstart' in window) return;
+    const pointer = document.getElementById('cursor-pointer');
+    const ring = document.getElementById('cursor-ring');
+    const label = document.getElementById('cursor-label');
+    if (!pointer || !ring) return;
+    el.addEventListener('mouseenter', () => {
+      label.textContent = el.dataset.cursorLabel || '';
+      ring.classList.add('labeled');
+      pointer.classList.add('hidden-cursor');
+    });
+    el.addEventListener('mouseleave', () => {
+      ring.classList.remove('labeled');
+      pointer.classList.remove('hidden-cursor');
+    });
+  }
+
+  function timeAgo(dateStr) {
+    const diff = (Date.now() - new Date(dateStr).getTime()) / 1000;
+    const loc = getLocale();
+    const units = [
+      [60, 'sec'], [3600, 'min'], [86400, 'hour'], [2592000, 'day'], [31536000, 'month'], [Infinity, 'year'],
+    ];
+    if (diff < 60) return { uz: 'hozirgina', uz_cyr: 'ҳозиргина', en: 'just now', ru: 'только что' }[loc];
+    const days = Math.floor(diff / 86400);
+    if (days < 1) return { uz: 'bugun', uz_cyr: 'бугун', en: 'today', ru: 'сегодня' }[loc];
+    if (days === 1) return { uz: 'kecha', uz_cyr: 'кеча', en: 'yesterday', ru: 'вчера' }[loc];
+    if (days < 30) return { uz: `${days} kun oldin`, uz_cyr: `${days} кун олдин`, en: `${days} days ago`, ru: `${days} дн. назад` }[loc];
+    const months = Math.floor(days / 30);
+    return { uz: `${months} oy oldin`, uz_cyr: `${months} ой олдин`, en: `${months} months ago`, ru: `${months} мес. назад` }[loc];
+  }
+
+  const params = new URLSearchParams(location.search);
+  const slug = params.get('slug') || params.get('id');
+  const detailRoot = document.getElementById('project-detail');
+  let currentProject = null;
+
+  function revealAndCursor(el) {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(32px)';
+    el.style.transition = 'opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1)';
+    new IntersectionObserver((entries, obs) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'none';
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' }).observe(el);
+  }
+
+  async function loadProject() {
+    try {
+      currentProject = await fetch(`/api/projects/${encodeURIComponent(slug)}`).then((r) => {
+        if (!r.ok) throw new Error('not found');
+        return r.json();
+      });
+    } catch (err) {
+      currentProject = null;
+    }
+  }
+
+  function renderNotFound() {
+    detailRoot.innerHTML = `
+      <div class="page-hero">
+        <p class="eyebrow center" data-i18n="error_not_found">Loyiha topilmadi</p>
+        <div class="projects-more"><a href="projects.html" class="btn btn-primary"><span data-i18n="back_to_all">Barcha loyihalarga qaytish</span></a></div>
+      </div>
+    `;
+    applyStaticStrings();
+  }
+
+  function renderProject() {
+    const p = currentProject;
+
+    detailRoot.innerHTML = `
+      <div class="app-header">
+        <div class="app-icon">${(p.logo_url || p.image_url) ? `<img src="${esc(p.logo_url || p.image_url)}" style="width:100%;height:100%;object-fit:cover;border-radius:28px;">` : '🛍️'}</div>
+        <div class="app-title">
+          <a href="projects.html" class="back-link" data-i18n="back_to_all">← Barcha loyihalar</a>
+          <h1 id="p-title"></h1>
+          <p class="app-dev">${esc(p.author_name || 'Sardorxon Valiyev')}</p>
+          <div class="app-meta">
+            <div class="app-meta-item"><strong id="p-views">${p.views_count || 0}</strong><span data-i18n="views_label">Ko'rishlar</span></div>
+            <div class="app-meta-item"><strong id="p-category"></strong><span data-i18n="technologies">Kategoriya</span></div>
+            <div class="app-meta-item"><strong>${(p.tags || []).length}</strong><span data-i18n="technologies">Texnologiya</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="app-actions">
+        <a href="${esc(p.link)}" target="_blank" rel="noopener" class="btn btn-primary btn-huge" id="view-project-link"><span data-i18n="view_project_btn">Loyihani ko'rish</span></a>
+        <a href="${esc(p.github_link)}" target="_blank" rel="noopener" class="btn btn-ghost glass" id="view-github-link"><span data-i18n="github_btn">GitHub</span></a>
+      </div>
+
+      ${(p.video_url || (p.screenshots && p.screenshots.length)) ? `
+      <div class="screenshots-row">
+        ${p.video_url ? `
+        <div class="screenshot-tile screenshot-video-tile" id="video-trigger-tile">
+          <video src="${esc(p.video_url)}" ${(p.video_poster_url || p.logo_url || p.image_url) ? `poster="${esc(p.video_poster_url || p.logo_url || p.image_url)}"` : ''} muted playsinline preload="metadata"></video>
+          <div class="play-overlay">
+            <div class="play-pill">
+              <span class="play-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+              <span class="view-label" data-i18n="view_label">Ko'rish</span>
+            </div>
+          </div>
+        </div>` : ''}
+        ${(p.screenshots || []).map((url) => `<div class="screenshot-tile"><img src="${esc(url)}" loading="lazy"></div>`).join('')}
+      </div>` : ''}
+
+      ${p.video_url ? `
+      <div class="video-lightbox" id="video-lightbox">
+        <div class="video-lightbox-inner">
+          <button type="button" class="video-lightbox-close" id="video-lightbox-close">&times;</button>
+          <video id="video-lightbox-player" controls playsinline></video>
+        </div>
+      </div>` : ''}
+
+      <div class="app-section">
+        <h2 data-i18n="description">Tavsif</h2>
+        <p id="p-description"></p>
+      </div>
+
+      <div class="app-section">
+        <h2 data-i18n="technologies">Texnologiyalar</h2>
+        <div class="tags">${(p.tags || []).map((tag) => `<span>${esc(tag)}</span>`).join('')}</div>
+      </div>
+
+      <div class="app-section">
+        <h2 data-i18n="reviews_heading">Fikrlar</h2>
+        <div id="reviews-summary"></div>
+
+        <div class="review-form-card glass">
+          <h3 data-i18n="reviews_heading">Fikr qoldiring</h3>
+          <div class="star-input" id="review-star-input">
+            <button type="button" data-star="1">★</button>
+            <button type="button" data-star="2">★</button>
+            <button type="button" data-star="3">★</button>
+            <button type="button" data-star="4">★</button>
+            <button type="button" data-star="5">★</button>
+          </div>
+          <div class="field-row" style="display:flex;gap:12px;margin:12px 0;">
+            <input type="text" id="review-name" data-i18n-ph="review_name_ph" placeholder="Ismingiz" style="flex:1;padding:12px 14px;border-radius:12px;border:1px solid var(--glass-border);background:var(--glass-bg-strong);color:var(--text-0);">
+          </div>
+          <textarea id="review-comment" data-i18n-ph="review_comment_ph" placeholder="Fikringizni yozing..." rows="3" style="width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--glass-border);background:var(--glass-bg-strong);color:var(--text-0);margin-bottom:12px;"></textarea>
+          <button class="btn btn-primary" id="review-submit"><span data-i18n="review_submit">Fikr qoldirish</span></button>
+          <p id="review-status" style="margin-top:10px;font-size:0.85rem;color:var(--accent);"></p>
+        </div>
+
+        <div id="reviews-list"></div>
+      </div>
+    `;
+
+    applyStaticStrings();
+    bindText(document.getElementById('p-title'), p.title || {});
+    bindText(document.getElementById('p-description'), p.description || {});
+    bindText(document.getElementById('p-category'), p.category || {});
+
+    document.title = `${p.title?.[getLocale()] || p.slug} | Sardorxon Valiyev`;
+
+    document.querySelectorAll('#project-detail .app-header, #project-detail .app-actions, #project-detail .screenshots-row, #project-detail .app-section').forEach(revealAndCursor);
+
+    wireVideoLightbox(p.video_url);
+    wireReviews(p.slug);
+    wireViewTracking(p.slug);
+    wireScreenshotsWheelScroll();
+  }
+
+  // ===== Scroll wheel over screenshots: scroll horizontally first, then hand off to the page =====
+  function wireScreenshotsWheelScroll() {
+    const row = document.querySelector('.screenshots-row');
+    if (!row) return;
+    row.addEventListener('wheel', (e) => {
+      const delta = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+      if (delta === 0) return;
+      const atStart = row.scrollLeft <= 0;
+      const atEnd = row.scrollLeft + row.clientWidth >= row.scrollWidth - 1;
+      if ((delta < 0 && atStart) || (delta > 0 && atEnd)) return; // let the page scroll take over
+      e.preventDefault();
+      row.scrollLeft += delta;
+    }, { passive: false });
+  }
+
+  // ===== View tracking: count clicks on "Loyihani ko'rish" / GitHub =====
+  function wireViewTracking(slug) {
+    let counted = false;
+    function trackView() {
+      if (counted) return;
+      counted = true;
+      const counterEl = document.getElementById('p-views');
+      if (counterEl) counterEl.textContent = (parseInt(counterEl.textContent, 10) || 0) + 1;
+      fetch(`/api/projects/${encodeURIComponent(slug)}/view`, { method: 'POST' }).catch(() => {});
+    }
+    document.getElementById('view-project-link')?.addEventListener('click', trackView);
+    document.getElementById('view-github-link')?.addEventListener('click', trackView);
+  }
+
+  // ===== Video lightbox =====
+  function wireVideoLightbox(videoUrl) {
+    if (!videoUrl) return;
+    const trigger = document.getElementById('video-trigger-tile');
+    const lightbox = document.getElementById('video-lightbox');
+    const player = document.getElementById('video-lightbox-player');
+    const closeBtn = document.getElementById('video-lightbox-close');
+    if (!trigger || !lightbox || !player) return;
+
+    function openLightbox() {
+      player.src = videoUrl;
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      player.play().catch(() => {});
+    }
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+      player.pause();
+      player.removeAttribute('src');
+      player.load();
+    }
+
+    trigger.addEventListener('click', openLightbox);
+    closeBtn.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+  }
+
+  // ===== Reviews =====
+  let selectedStars = 0;
+
+  function wireReviews(slug) {
+    const starInput = document.getElementById('review-star-input');
+    starInput.querySelectorAll('button').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        selectedStars = parseInt(btn.dataset.star, 10);
+        starInput.querySelectorAll('button').forEach((b) => {
+          b.classList.toggle('filled', parseInt(b.dataset.star, 10) <= selectedStars);
+        });
+      });
+    });
+
+    document.getElementById('review-submit').addEventListener('click', async () => {
+      const name = document.getElementById('review-name').value.trim();
+      const comment = document.getElementById('review-comment').value.trim();
+      const statusEl = document.getElementById('review-status');
+      statusEl.style.color = 'var(--danger, #c0503f)';
+
+      if (!name || !comment || !selectedStars) {
+        statusEl.textContent = getLocale() === 'en' ? 'Please fill in all fields and choose a rating.'
+          : getLocale() === 'ru' ? 'Заполните все поля и выберите оценку.'
+          : getLocale() === 'uz_cyr' ? 'Барча майдонларни тўлдиринг ва баҳо танланг.'
+          : "Barcha maydonlarni to'ldiring va baho tanlang.";
+        return;
+      }
+
+      try {
+        await fetch(`/api/projects/${encodeURIComponent(slug)}/reviews`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, rating: selectedStars, comment }),
+        }).then((r) => { if (!r.ok) return r.json().then((d) => { throw new Error(d.error); }); });
+
+        statusEl.style.color = 'var(--accent)';
+        statusEl.textContent = t('review_sent');
+        document.getElementById('review-name').value = '';
+        document.getElementById('review-comment').value = '';
+        selectedStars = 0;
+        starInput.querySelectorAll('button').forEach((b) => b.classList.remove('filled'));
+        loadReviews(slug);
+      } catch (err) {
+        statusEl.textContent = err.message;
+      }
+    });
+
+    loadReviews(slug);
+  }
+
+  async function loadReviews(slug) {
+    let data = { reviews: [], count: 0, average: 0 };
+    try {
+      data = await fetch(`/api/projects/${encodeURIComponent(slug)}/reviews`).then((r) => r.json());
+    } catch (err) { /* ignore */ }
+
+    const summary = document.getElementById('reviews-summary');
+    const list = document.getElementById('reviews-list');
+    if (!summary || !list) return;
+
+    if (data.count > 0) {
+      const avgRounded = Math.round(data.average);
+      summary.innerHTML = `
+        <div class="reviews-summary">
+          <span class="reviews-avg">${data.average.toFixed(1)}</span>
+          <div>
+            <div class="reviews-avg-stars">${'★'.repeat(avgRounded)}${'☆'.repeat(5 - avgRounded)}</div>
+            <div class="reviews-count">${data.count} ${getLocale() === 'en' ? 'reviews' : getLocale() === 'ru' ? 'отзывов' : getLocale() === 'uz_cyr' ? 'та фикр' : 'ta fikr'}</div>
+          </div>
+        </div>
+      `;
+    } else {
+      summary.innerHTML = '';
+    }
+
+    if (!data.reviews.length) {
+      list.innerHTML = `<p class="reviews-empty">${t('reviews_empty')}</p>`;
+      return;
+    }
+
+    list.innerHTML = data.reviews.map((r) => `
+      <div class="review-item glass">
+        <div class="review-item-head">
+          <div>
+            <div class="review-item-name">${esc(r.name)}</div>
+            <div class="review-item-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div>
+          </div>
+          <span class="review-item-date">${timeAgo(r.created_at)}</span>
+        </div>
+        <p class="review-item-comment">${esc(r.comment)}</p>
+        ${r.admin_reply ? `<div class="review-item-reply"><strong>${t('admin_reply_label')}</strong>${esc(r.admin_reply)}</div>` : ''}
+      </div>
+    `).join('');
+  }
+
+  async function init() {
+    applyStaticStrings();
+    updateLangSwitchUI();
+    wireLangSwitch(() => {
+      refreshBindings();
+      if (currentProject) loadReviews(currentProject.slug);
+    });
+
+    await loadProject();
+    if (!currentProject) {
+      renderNotFound();
+    } else {
+      renderProject();
+    }
+  }
+
+  init();
+</script>
+</body>
+</html>

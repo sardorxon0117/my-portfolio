@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barcha loyihalar | Sardorxon Valiyev</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="preloader" id="preloader">
+  <div class="preloader-inner">
+    <div class="preloader-name">Sardorxon<span class="accent-text">.</span></div>
+    <div class="preloader-bar"><span id="preloader-fill"></span></div>
+    <div class="preloader-count"><span id="preloader-num">0</span>%</div>
+  </div>
+  <div class="preloader-panel panel-left"></div>
+  <div class="preloader-panel panel-right"></div>
+</div>
+
+<div class="cursor-pointer" id="cursor-pointer">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 3l15 6.5-6.4 2.1L11 18z"/></svg>
+</div>
+<div class="cursor-ring" id="cursor-ring"><span id="cursor-label"></span></div>
+
+<div class="progress-bar" id="progress-bar"></div>
+
+<div class="bg-blobs" id="bg-blobs">
+  <span class="blob blob-1"></span>
+  <span class="blob blob-2"></span>
+  <span class="blob blob-3"></span>
+</div>
+<div class="grain"></div>
+
+<header class="navbar glass">
+  <a href="index.html" class="logo">S<span>V</span></a>
+  <nav class="nav-links" id="nav-links">
+    <span class="nav-pill" id="nav-pill"></span>
+    <a href="index.html#home" data-i18n-nav="home">Bosh sahifa</a>
+    <a href="index.html#about" data-i18n-nav="about">Men haqimda</a>
+    <a href="index.html#skills" data-i18n-nav="skills">Ko'nikmalar</a>
+    <a href="projects.html" class="active" data-i18n-nav="projects">Loyihalar</a>
+    <a href="index.html#contact" data-i18n-nav="contact">Aloqa</a>
+  </nav>
+  <div class="nav-actions">
+    <div class="lang-switch" id="lang-switch">
+      <button type="button" class="lang-trigger glass" id="lang-trigger">
+        <span id="lang-current">UZ</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="lang-panel">
+        <button type="button" data-locale="uz">O'zbekcha (lotin)</button>
+        <button type="button" data-locale="uz_cyr">Ўзбекча (кирилл)</button>
+        <button type="button" data-locale="en">English</button>
+        <button type="button" data-locale="ru">Русский</button>
+      </div>
+    </div>
+    <button id="theme-toggle" class="icon-btn glass" aria-label="Mode almashtirish">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+    </button>
+    <button id="nav-toggle" class="icon-btn glass burger" aria-label="Menyu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <div class="page-hero">
+    <a href="index.html" class="back-link reveal" data-reveal data-i18n="back_to_home">← Bosh sahifaga qaytish</a>
+    <p class="eyebrow center reveal" data-reveal data-i18n="projects_eyebrow">Portfolio</p>
+    <h2 class="reveal" data-reveal data-i18n="projects_heading">Men qilgan ishlar</h2>
+    <div class="projects-search-wrap reveal" data-reveal>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <input type="text" id="projects-search" class="projects-search-input" data-i18n-ph="search_placeholder" placeholder="Loyihalarni qidirish...">
+    </div>
+  </div>
+
+  <div class="all-projects-grid" id="all-projects-grid"></div>
+</main>
+
+<footer class="footer glass">
+  <p>© 2026 Sardorxon Valiyev. <span data-i18n="footer_rights">Barcha huquqlar himoyalangan.</span></p>
+</footer>
+
+<script src="i18n.js"></script>
+<script src="script.js"></script>
+<script>
+  function esc(str) {
+    return String(str ?? '').replace(/[&<>"']/g, (c) => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+  }
+
+  const bindings = [];
+  function bindText(el, i18nMap) {
+    if (!el) return;
+    bindings.push({ el, i18nMap: i18nMap || {} });
+    el.textContent = (i18nMap && i18nMap[getLocale()]) || '';
+  }
+  function refreshBindings() {
+    const loc = getLocale();
+    bindings.forEach(({ el, i18nMap }) => { el.textContent = i18nMap[loc] || ''; });
+  }
+
+  function wireCursorLabel(el) {
+    if ('ontouchstart' in window) return;
+    const pointer = document.getElementById('cursor-pointer');
+    const ring = document.getElementById('cursor-ring');
+    const label = document.getElementById('cursor-label');
+    if (!pointer || !ring) return;
+    el.addEventListener('mouseenter', () => {
+      label.textContent = el.dataset.cursorLabel || '';
+      ring.classList.add('labeled');
+      pointer.classList.add('hidden-cursor');
+    });
+    el.addEventListener('mouseleave', () => {
+      ring.classList.remove('labeled');
+      pointer.classList.remove('hidden-cursor');
+    });
+  }
+
+  function observeReveal(el) {
+    new IntersectionObserver((entries, obs) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'none';
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' }).observe(el);
+  }
+
+  let allProjects = [];
+  const grid = document.getElementById('all-projects-grid');
+  const searchInput = document.getElementById('projects-search');
+
+  function resetCursorState() {
+    document.getElementById('cursor-ring')?.classList.remove('labeled');
+    document.getElementById('cursor-pointer')?.classList.remove('hidden-cursor');
+  }
+
+  function renderGrid(term) {
+    term = (term || '').trim().toLowerCase();
+    const filtered = !term ? allProjects : allProjects.filter((p) => {
+      const titles = Object.values(p.title || {}).join(' ').toLowerCase();
+      const tags = (p.tags || []).join(' ').toLowerCase();
+      return p.slug.toLowerCase().includes(term) || titles.includes(term) || tags.includes(term);
+    });
+
+    resetCursorState();
+    grid.innerHTML = '';
+    if (!filtered.length) {
+      grid.innerHTML = `<p class="no-results">${getLocale() === 'en' ? 'No projects found.' : getLocale() === 'ru' ? 'Проекты не найдены.' : getLocale() === 'uz_cyr' ? 'Ҳеч нарса топилмади.' : 'Hech narsa topilmadi.'}</p>`;
+      return;
+    }
+
+    filtered.forEach((p) => {
+      const card = document.createElement('a');
+      card.href = `project.html?slug=${encodeURIComponent(p.slug)}`;
+      card.className = 'project-card glass';
+      card.dataset.cursorLabel = "Ko'rish";
+      card.style.cssText = 'opacity:0;transform:translateY(32px);transition:opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1);';
+      card.innerHTML = `
+        <div class="project-card-visual">${p.image_url ? `<img src="${esc(p.image_url)}" style="width:100%;height:100%;object-fit:cover;">` : (p.icon || '🛍️')}</div>
+        <div class="project-card-body">
+          <h3></h3>
+          <p></p>
+          <div class="tags">${(p.tags || []).map((tag) => `<span>${esc(tag)}</span>`).join('')}</div>
+        </div>
+      `;
+      grid.appendChild(card);
+      bindText(card.querySelector('h3'), p.title || {});
+      bindText(card.querySelector('p'), p.tagline || {});
+      observeReveal(card);
+      wireCursorLabel(card);
+    });
+  }
+
+  searchInput.addEventListener('input', () => renderGrid(searchInput.value));
+
+  async function init() {
+    applyStaticStrings();
+    updateLangSwitchUI();
+    wireLangSwitch(() => { refreshBindings(); renderGrid(searchInput.value); });
+
+    try {
+      allProjects = await fetch('/api/projects').then((r) => r.json());
+    } catch (err) {
+      console.error(err);
+    }
+
+    renderGrid();
+  }
+
+  init();
+</script>
+</body>
+</html>

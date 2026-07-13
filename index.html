@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sardorxon Valiyev | Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="preloader" id="preloader">
+  <div class="preloader-inner">
+    <div class="preloader-name">Sardorxon<span class="accent-text">.</span></div>
+    <div class="preloader-bar"><span id="preloader-fill"></span></div>
+    <div class="preloader-count"><span id="preloader-num">0</span>%</div>
+  </div>
+  <div class="preloader-panel panel-left"></div>
+  <div class="preloader-panel panel-right"></div>
+</div>
+
+<div class="cursor-pointer" id="cursor-pointer">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 3l15 6.5-6.4 2.1L11 18z"/></svg>
+</div>
+<div class="cursor-ring" id="cursor-ring"><span id="cursor-label"></span></div>
+
+<div class="progress-bar" id="progress-bar"></div>
+
+<div class="bg-blobs" id="bg-blobs">
+  <span class="blob blob-1"></span>
+  <span class="blob blob-2"></span>
+  <span class="blob blob-3"></span>
+</div>
+<div class="grain"></div>
+
+<header class="navbar glass">
+  <a href="#home" class="logo" data-nav="home">S<span>V</span></a>
+  <nav class="nav-links" id="nav-links">
+    <span class="nav-pill" id="nav-pill"></span>
+    <a href="#home" data-nav="home" class="active" data-i18n-nav="home">Bosh sahifa</a>
+    <a href="#about" data-nav="about" data-i18n-nav="about">Men haqimda</a>
+    <a href="#skills" data-nav="skills" data-i18n-nav="skills">Ko'nikmalar</a>
+    <a href="#projects" data-nav="projects" data-i18n-nav="projects">Loyihalar</a>
+    <a href="#contact" data-nav="contact" data-i18n-nav="contact">Aloqa</a>
+  </nav>
+  <div class="nav-actions">
+    <div class="lang-switch" id="lang-switch">
+      <button type="button" class="lang-trigger glass" id="lang-trigger">
+        <span id="lang-current">UZ</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="lang-panel">
+        <button type="button" data-locale="uz">O'zbekcha (lotin)</button>
+        <button type="button" data-locale="uz_cyr">Ўзбекча (кирилл)</button>
+        <button type="button" data-locale="en">English</button>
+        <button type="button" data-locale="ru">Русский</button>
+      </div>
+    </div>
+    <button id="theme-toggle" class="icon-btn glass" aria-label="Mode almashtirish">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+    </button>
+    <button id="nav-toggle" class="icon-btn glass burger" aria-label="Menyu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section id="home" class="hero">
+    <div class="hero-bg-text" aria-hidden="true" id="hero-bg-text">VALIYEV</div>
+    <div class="hero-content">
+      <p class="eyebrow reveal" data-reveal id="hero-eyebrow">Salom, men</p>
+      <h1 class="hero-title">
+        <span class="reveal-line" data-reveal style="--d:1" id="hero-firstname">Sardorxon</span>
+        <span class="reveal-line accent-text" data-reveal style="--d:2" id="hero-lastname">Valiyev</span>
+      </h1>
+      <h2 class="typing reveal" data-reveal style="--d:3" id="hero-role">Frontend Dasturchi</h2>
+      <p class="hero-text reveal" data-reveal style="--d:4" id="hero-text">Zamonaviy, tez va chiroyli veb-saytlar yarataman.</p>
+      <div class="hero-buttons reveal" data-reveal style="--d:5">
+        <a href="#projects" class="btn btn-primary"><span data-i18n="cta_projects">Loyihalarni ko'rish</span></a>
+        <a href="#contact" class="btn btn-ghost glass"><span data-i18n="cta_contact">Bog'lanish</span></a>
+      </div>
+    </div>
+    <a href="#about" class="scroll-cue" aria-label="Pastga o'tish">
+      <span></span>
+    </a>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee">
+    <div class="marquee-track" id="marquee-track-1"></div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about" class="section">
+    <div class="section-head">
+      <span class="section-index">01</span>
+      <p class="eyebrow center reveal" data-reveal data-i18n="about_eyebrow">Tanishuv</p>
+      <h2 class="reveal" data-reveal data-i18n="about_heading">Men haqimda</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-photo reveal" data-reveal data-reveal-dir="left">
+        <div class="photo-placeholder" id="about-photo">SV</div>
+      </div>
+      <div class="about-card reveal" data-reveal data-reveal-dir="right">
+        <p id="about-p1"></p>
+        <p id="about-p2"></p>
+        <div class="stats" id="stats-container"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" class="section">
+    <div class="section-head">
+      <span class="section-index">02</span>
+      <p class="eyebrow center reveal" data-reveal data-i18n="skills_eyebrow">Texnologiyalar</p>
+      <h2 class="reveal" data-reveal data-i18n="skills_heading">Ko'nikmalarim</h2>
+    </div>
+    <div class="skills-list" id="skills-container"></div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="section">
+    <div class="section-head">
+      <span class="section-index">03</span>
+      <p class="eyebrow center reveal" data-reveal data-i18n="projects_eyebrow">Ishlarim</p>
+      <h2 class="reveal" data-reveal data-i18n="projects_heading">Men qilgan ishlar</h2>
+    </div>
+    <div class="project-rows" id="projects-container"></div>
+    <div class="projects-more reveal" data-reveal>
+      <a href="projects.html" class="btn btn-ghost glass"><span data-i18n="view_all_projects">Barcha loyihalarni ko'rish →</span></a>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="cta-inner">
+      <p class="eyebrow center reveal" data-reveal data-i18n="cta_eyebrow">Keling boshlaylik</p>
+      <h2 class="cta-title reveal" data-reveal>
+        <span data-i18n="cta_title1">Loyihangizni birga</span><br>
+        <span class="accent-text" data-i18n="cta_title2">hayotga tatbiq etaylik</span>
+      </h2>
+      <a href="#contact" class="btn btn-primary btn-huge reveal" data-reveal><span data-i18n="cta_contact_btn">Bog'lanish →</span></a>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="section">
+    <div class="section-head">
+      <span class="section-index">04</span>
+      <p class="eyebrow center reveal" data-reveal data-i18n="contact_eyebrow">Bog'lanish</p>
+      <h2 class="reveal" data-reveal data-i18n="contact_heading">Keling, gaplashamiz</h2>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info reveal" data-reveal data-reveal-dir="left">
+        <div class="info-row">
+          <span class="info-icon">✉️</span>
+          <div>
+            <p class="info-label" data-i18n="email_label">Email</p>
+            <p class="info-value"><a href="mailto:" id="contact-email">—</a></p>
+          </div>
+        </div>
+        <div class="info-row">
+          <span class="info-icon">📞</span>
+          <div>
+            <p class="info-label" data-i18n="phone_label">Telefon</p>
+            <p class="info-value"><a href="tel:" id="contact-phone">—</a></p>
+          </div>
+        </div>
+        <p class="social-label" data-i18n="social_label">Ijtimoiy tarmoqlar</p>
+        <div class="contact-socials" id="contact-socials">
+          <a href="#" class="social-pill" data-platform="github" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.09 3.29 9.4 7.86 10.93.57.1.78-.25.78-.55v-2.15c-3.2.7-3.88-1.36-3.88-1.36-.52-1.34-1.28-1.7-1.28-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.26-1.28-5.26-5.7 0-1.26.45-2.3 1.2-3.1-.12-.29-.52-1.48.11-3.08 0 0 .97-.31 3.2 1.18a11 11 0 015.82 0c2.22-1.49 3.2-1.18 3.2-1.18.63 1.6.23 2.79.12 3.08.74.8 1.19 1.84 1.19 3.1 0 4.44-2.7 5.4-5.28 5.68.42.36.78 1.08.78 2.18v3.24c0 .3.2.66.79.55A10.52 10.52 0 0023.5 12c0-6.27-5.23-11.5-11.5-11.5z"/></svg>
+            <span data-i18n="social_github">GitHub</span>
+          </a>
+          <a href="#" class="social-pill" data-platform="telegram" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 3.5L2.7 11.1c-1.3.5-1.3 1.2-.2 1.6l4.9 1.5 1.9 5.8c.2.6.5.8.9.8.4 0 .6-.2.8-.4l2.4-2.3 5 3.6c.8.5 1.4.2 1.6-.8l3-14.2c.3-1.3-.4-1.8-1-1.2z"/></svg>
+            <span data-i18n="social_telegram">Telegram</span>
+          </a>
+          <a href="#" class="social-pill" data-platform="telegram_channel" target="_blank" rel="noopener">
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 3.75a.75.75 0 00-1.264-.546L4.703 7H3.167a.75.75 0 00-.7.48A6.985 6.985 0 002 10c0 .887.165 1.737.468 2.52.111.29.39.48.7.48h1.535l4.033 3.796A.75.75 0 0010 16.25V3.75zM15.95 5.05a.75.75 0 00-1.06 1.061 5.5 5.5 0 010 7.778.75.75 0 001.06 1.06 7 7 0 000-9.899zM13.829 7.172a.75.75 0 00-1.061 1.06 2.5 2.5 0 010 3.536.75.75 0 001.06 1.06 4 4 0 000-5.656z"/></svg>
+            <span data-i18n="social_telegram_channel">Telegram kanal</span>
+          </a>
+          <a href="#" class="social-pill" data-platform="facebook" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            <span data-i18n="social_facebook">Facebook</span>
+          </a>
+          <a href="#" class="social-pill" data-platform="instagram" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C8.74 0 8.333.014 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.014 8.333 0 8.74 0 12s.014 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.014 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.014-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.014 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.898 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.898-.421-.419-.69-.824-.898-1.38-.165-.42-.36-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.06-1.17.255-1.814.42-2.234.21-.57.479-.96.898-1.381.419-.419.81-.689 1.379-.898.42-.165 1.051-.36 2.221-.421 1.275-.045 1.65-.06 4.859-.06zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"/></svg>
+            <span data-i18n="social_instagram">Instagram</span>
+          </a>
+        </div>
+      </div>
+      <form class="contact-form glass reveal" data-reveal data-reveal-dir="right">
+        <div class="form-row">
+          <div class="field">
+            <input type="text" placeholder=" " required id="f-name">
+            <label for="f-name" data-i18n="form_name">Ismingiz</label>
+          </div>
+          <div class="field">
+            <input type="email" placeholder=" " required id="f-email">
+            <label for="f-email" data-i18n="form_email">Emailingiz</label>
+          </div>
+        </div>
+        <div class="field">
+          <input type="text" placeholder=" " required id="f-subject">
+          <label for="f-subject" data-i18n="form_subject">Mavzu</label>
+        </div>
+        <div class="field">
+          <textarea rows="5" placeholder=" " required id="f-message"></textarea>
+          <label for="f-message" data-i18n="form_message">Xabaringiz</label>
+        </div>
+        <button type="submit" class="btn btn-primary full"><span data-i18n="form_submit">Xabar yuborish</span></button>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<div class="marquee marquee-alt">
+  <div class="marquee-track" id="marquee-track-2"></div>
+</div>
+
+<footer class="footer glass">
+  <p>© 2026 Sardorxon Valiyev. <span data-i18n="footer_rights">Barcha huquqlar himoyalangan.</span></p>
+</footer>
+
+<script src="i18n.js"></script>
+<script src="app.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

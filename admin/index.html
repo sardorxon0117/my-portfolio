@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin panel | Sardorxon Valiyev</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Fraunces:wght@600;700&display=swap">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+<div id="login-screen" class="login-screen">
+  <form id="login-form" class="login-card">
+    <h1>Admin panel</h1>
+    <input type="text" id="login-username" placeholder="Login" autocomplete="username" required>
+    <input type="password" id="login-password" placeholder="Parol" autocomplete="current-password" required>
+    <button type="submit">Kirish</button>
+    <p id="login-error" class="error-text"></p>
+  </form>
+</div>
+
+<div id="dashboard" class="dashboard hidden">
+  <aside class="sidebar">
+    <div class="sidebar-logo">SV<span>.</span></div>
+    <nav class="sidebar-nav">
+      <button data-tab="content" class="active">Asosiy kontent</button>
+      <button data-tab="stats">Statistika</button>
+      <button data-tab="skills">Ko'nikmalar</button>
+      <button data-tab="projects">Loyihalar</button>
+      <button data-tab="social">Ijtimoiy tarmoq</button>
+      <button data-tab="reviews">Sharhlar</button>
+      <button data-tab="messages">Xabarlar <span id="messages-badge" class="nav-badge hidden">0</span></button>
+    </nav>
+    <button id="logout-btn" class="logout-btn">Chiqish →</button>
+  </aside>
+  <main class="panel-main">
+    <div id="tab-content" class="tab-panel"></div>
+  </main>
+</div>
+
+<div id="toast" class="toast">
+  <span id="toast-text" class="toast-text"></span>
+  <div id="toast-bar" class="toast-bar hidden"><div id="toast-bar-fill" class="toast-bar-fill"></div></div>
+</div>
+
+<script src="admin.js"></script>
+</body>
+</html>
