@@ -1,5 +1,6 @@
 require('dotenv').config();
 const { S3Client, PutObjectCommand, DeleteObjectCommand } = require('@aws-sdk/client-s3');
+const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
 const crypto = require('crypto');
 const path = require('path');
 
@@ -13,18 +14,20 @@ const s3 = new S3Client({
 
 const BUCKET = process.env.S3_BUCKET_NAME;
 
-async function uploadImage(file, folder = 'uploads') {
-  const ext = path.extname(file.originalname).toLowerCase() || '.jpg';
+// Returns a short-lived presigned PUT URL so the browser can upload the file
+// bytes straight to S3 — the request body never passes through our server/
+// serverless function, so there's no platform payload-size limit to hit.
+async function getUploadUrl(originalName, contentType, folder = 'uploads') {
+  const ext = path.extname(originalName).toLowerCase() || '.bin';
   const key = `${folder}/${Date.now()}-${crypto.randomBytes(6).toString('hex')}${ext}`;
 
-  await s3.send(new PutObjectCommand({
-    Bucket: BUCKET,
-    Key: key,
-    Body: file.buffer,
-    ContentType: file.mimetype,
-  }));
-
-  return `https://${BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${key}`;
+  const uploadUrl = await getSignedUrl(
+    s3,
+    new PutObjectCommand({ Bucket: BUCKET, Key: key, ContentType: contentType }),
+    { expiresIn: 300 }
+  );
+  const publicUrl = `https://${BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${key}`;
+  return { uploadUrl, publicUrl };
 }
 
 async function deleteImage(url) {
@@ -38,4 +41,4 @@ async function deleteImage(url) {
   }
 }
 
-module.exports = { uploadImage, deleteImage };
+module.exports = { getUploadUrl, deleteImage };

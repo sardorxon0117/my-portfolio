@@ -44,7 +44,14 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Serverda kutilmagan xatolik yuz berdi.' });
 });
 
-const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
-});
+// On Vercel this file is required by api/index.js as a serverless function —
+// there's no persistent process to listen on a port there, Vercel invokes the
+// exported app per-request instead. Only bind a port for local/traditional hosting.
+if (require.main === module) {
+  const PORT = process.env.PORT || 4000;
+  app.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}`);
+  });
+}
+
+module.exports = app;

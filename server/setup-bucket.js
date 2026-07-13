@@ -4,6 +4,7 @@ const {
   PutPublicAccessBlockCommand,
   PutBucketPolicyCommand,
   GetBucketPolicyCommand,
+  PutBucketCorsCommand,
 } = require('@aws-sdk/client-s3');
 
 const BUCKET = process.env.S3_BUCKET_NAME;
@@ -67,7 +68,27 @@ async function main() {
     console.error('Could not verify policy:', err.message);
   }
 
-  console.log('Done. Uploaded images should now be publicly viewable.');
+  try {
+    await s3.send(new PutBucketCorsCommand({
+      Bucket: BUCKET,
+      CORSConfiguration: {
+        CORSRules: [
+          {
+            AllowedOrigins: ['*'],
+            AllowedMethods: ['PUT', 'GET', 'HEAD'],
+            AllowedHeaders: ['*'],
+            MaxAgeSeconds: 3000,
+          },
+        ],
+      },
+    }));
+    console.log('✔ CORS configured (browser can now PUT directly to S3 via presigned URLs).');
+  } catch (err) {
+    console.error('✘ Failed to configure CORS:', err.message);
+    process.exit(1);
+  }
+
+  console.log('Done. Uploaded images should now be publicly viewable, and direct browser uploads are allowed.');
 }
 
 main();

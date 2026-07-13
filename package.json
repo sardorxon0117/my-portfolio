@@ -1,15 +1,9 @@
 {
-  "name": "portfolio-server",
+  "name": "portfolio",
   "version": "1.0.0",
   "private": true,
   "type": "commonjs",
-  "main": "server.js",
-  "scripts": {
-    "start": "node server.js",
-    "dev": "node --watch server.js",
-    "migrate": "node migrate.js",
-    "seed-admin": "node seed-admin.js"
-  },
+  "description": "Vercel deployment manifest — installs the same dependencies server/server.js needs, since api/index.js requires it from the project root. Local development still uses server/package.json (cd server && npm run dev).",
   "dependencies": {
     "@aws-sdk/client-s3": "^3.700.0",
     "@aws-sdk/s3-request-presigner": "^3.1085.0",

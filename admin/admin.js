@@ -54,29 +54,35 @@ async function api(path, opts = {}) {
   return data;
 }
 
-// Uploads with a visible progress overlay. If targetEl is given (the preview/manager
-// element the user is looking at), the overlay is drawn directly on top of it —
-// impossible to miss, unlike a toast at the edge of the screen. The overlay switches
-// to a spinner once the client->server leg hits 100%, since the server still has to
-// relay the file to S3 and that leg has no progress events of its own.
-function uploadImage(file, folder, targetEl) {
+// Uploads straight to S3 via a presigned URL — the file bytes never pass through
+// our own server/serverless function, so there's no platform payload-size limit
+// (this matters on Vercel, whose functions cap request bodies well under video size).
+// If targetEl is given (the preview/manager element the user is looking at), a
+// circular percentage ring is drawn directly on top of it.
+async function uploadImage(file, folder, targetEl) {
   const label = file.type.startsWith('video/') ? 'Video yuklanmoqda' : 'Rasm yuklanmoqda';
+
+  const { uploadUrl, publicUrl } = await api('/admin/upload-url', {
+    method: 'POST',
+    body: JSON.stringify({ filename: file.name, contentType: file.type, folder }),
+  });
+
+  let overlay = null, ring = null, pctEl = null;
+  if (targetEl) {
+    const cs = getComputedStyle(targetEl);
+    if (cs.position === 'static') targetEl.style.position = 'relative';
+    overlay = document.createElement('div');
+    overlay.className = 'upload-progress-overlay';
+    overlay.innerHTML = '<div class="upload-ring"><div class="upload-ring-inner"><span class="upload-progress-pct">0%</span></div></div>';
+    targetEl.appendChild(overlay);
+    ring = overlay.querySelector('.upload-ring');
+    pctEl = overlay.querySelector('.upload-progress-pct');
+  }
+
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', `${API}/admin/upload?folder=${encodeURIComponent(folder)}`);
-    if (TOKEN) xhr.setRequestHeader('Authorization', `Bearer ${TOKEN}`);
-
-    let overlay = null, ring = null, pctEl = null;
-    if (targetEl) {
-      const cs = getComputedStyle(targetEl);
-      if (cs.position === 'static') targetEl.style.position = 'relative';
-      overlay = document.createElement('div');
-      overlay.className = 'upload-progress-overlay';
-      overlay.innerHTML = '<div class="upload-ring"><div class="upload-ring-inner"><span class="upload-progress-pct">0%</span></div></div>';
-      targetEl.appendChild(overlay);
-      ring = overlay.querySelector('.upload-ring');
-      pctEl = overlay.querySelector('.upload-progress-pct');
-    }
+    xhr.open('PUT', uploadUrl);
+    xhr.setRequestHeader('Content-Type', file.type);
 
     xhr.upload.addEventListener('progress', (e) => {
       if (!e.lengthComputable) return;
@@ -90,20 +96,16 @@ function uploadImage(file, folder, targetEl) {
 
     xhr.onload = () => {
       if (overlay) overlay.remove();
-      let data = null;
-      try { data = JSON.parse(xhr.responseText); } catch (_) { /* no body */ }
       if (xhr.status >= 200 && xhr.status < 300) {
         toast('Yuklandi ✓');
-        resolve(data);
+        resolve({ url: publicUrl });
       } else {
-        reject(new Error((data && data.error) || `Xatolik (${xhr.status})`));
+        reject(new Error(`Yuklashda xatolik (${xhr.status})`));
       }
     };
-    xhr.onerror = () => { if (overlay) overlay.remove(); reject(new Error('Tarmoq xatoligi yuz berdi.')); };
+    xhr.onerror = () => { if (overlay) overlay.remove(); reject(new Error('Tarmoq xatoligi yuz berdi (S3 CORS sozlamasini tekshiring).')); };
 
-    const fd = new FormData();
-    fd.append('image', file);
-    xhr.send(fd);
+    xhr.send(file);
   });
 }
 
