@@ -140,7 +140,7 @@
       <div class="app-header">
         <a href="project.html?slug=${encodeURIComponent(p.slug)}" class="back-link" data-i18n="back_to_all">← Barcha loyihalar</a>
         <div class="app-header-top">
-          <div class="app-icon">${(p.logo_url || p.image_url) ? `<img src="${esc(p.logo_url || p.image_url)}" style="width:100%;height:100%;object-fit:cover;border-radius:28px;">` : '🛍️'}</div>
+          <div class="app-icon">${(p.logo_url || p.image_url) ? `<img src="${esc(p.logo_url || p.image_url)}">` : '🛍️'}</div>
           <div class="app-title">
             <h1 id="p-title"></h1>
             <p class="app-dev">${esc(p.author_name || 'Sardorxon Valiyev')}</p>
