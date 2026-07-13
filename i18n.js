@@ -17,7 +17,7 @@ const UI_STRINGS = {
     reviews_heading: 'Fikrlar', reviews_label: 'Sharhlar', reviews_empty: "Hozircha fikrlar yo'q. Birinchi bo'lib fikr qoldiring!",
     read_more_btn: "To'liq o'qish →", full_description_heading: "To'liq tavsif",
     review_name_ph: 'Ismingiz', review_comment_ph: 'Fikringizni yozing...', review_submit: 'Fikr qoldirish', review_sent: 'Rahmat! Fikringiz qo\'shildi.',
-    admin_reply_label: 'Muallif javobi', back_to_all: '← Barcha loyihalar', back_to_home: '← Bosh sahifaga qaytish', error_not_found: 'Loyiha topilmadi',
+    admin_reply_label: 'Muallif javobi', back_to_all: '← Barcha loyihalar', back_to_home: '← Bosh sahifaga qaytish', back_to_project: '← Loyihaga qaytish', error_not_found: 'Loyiha topilmadi',
     social_github: 'GitHub', social_telegram: 'Telegram', social_telegram_channel: 'Telegram kanal', social_facebook: 'Facebook', social_instagram: 'Instagram',
   },
   uz_cyr: {
@@ -36,7 +36,7 @@ const UI_STRINGS = {
     reviews_heading: 'Фикрлар', reviews_label: 'Шарҳлар', reviews_empty: "Ҳозирча фикрлар йўқ. Биринчи бўлиб фикр қолдиринг!",
     read_more_btn: 'Тўлиқ ўқиш →', full_description_heading: 'Тўлиқ тавсиф',
     review_name_ph: 'Исмингиз', review_comment_ph: 'Фикрингизни ёзинг...', review_submit: 'Фикр қолдириш', review_sent: 'Раҳмат! Фикрингиз қўшилди.',
-    admin_reply_label: 'Муаллиф жавоби', back_to_all: '← Барча лойиҳалар', back_to_home: '← Бош сахифага қайтиш', error_not_found: 'Лойиҳа топилмади',
+    admin_reply_label: 'Муаллиф жавоби', back_to_all: '← Барча лойиҳалар', back_to_home: '← Бош сахифага қайтиш', back_to_project: '← Лойиҳага қайтиш', error_not_found: 'Лойиҳа топилмади',
     social_github: 'GitHub', social_telegram: 'Telegram', social_telegram_channel: 'Телеграм канал', social_facebook: 'Facebook', social_instagram: 'Instagram',
   },
   en: {
@@ -55,7 +55,7 @@ const UI_STRINGS = {
     reviews_heading: 'Reviews', reviews_label: 'Reviews', reviews_empty: 'No reviews yet. Be the first to leave one!',
     read_more_btn: 'Read more →', full_description_heading: 'Full description',
     review_name_ph: 'Your name', review_comment_ph: 'Write your feedback...', review_submit: 'Submit review', review_sent: 'Thanks! Your review was added.',
-    admin_reply_label: "Author's reply", back_to_all: '← All projects', back_to_home: '← Back to home', error_not_found: 'Project not found',
+    admin_reply_label: "Author's reply", back_to_all: '← All projects', back_to_home: '← Back to home', back_to_project: '← Back to project', error_not_found: 'Project not found',
     social_github: 'GitHub', social_telegram: 'Telegram', social_telegram_channel: 'Telegram channel', social_facebook: 'Facebook', social_instagram: 'Instagram',
   },
   ru: {
@@ -74,7 +74,7 @@ const UI_STRINGS = {
     reviews_heading: 'Отзывы', reviews_label: 'Отзывы', reviews_empty: 'Пока нет отзывов. Оставьте первый!',
     read_more_btn: 'Читать полностью →', full_description_heading: 'Полное описание',
     review_name_ph: 'Ваше имя', review_comment_ph: 'Напишите отзыв...', review_submit: 'Оставить отзыв', review_sent: 'Спасибо! Ваш отзыв добавлен.',
-    admin_reply_label: 'Ответ автора', back_to_all: '← Все проекты', back_to_home: '← Вернуться на главную', error_not_found: 'Проект не найден',
+    admin_reply_label: 'Ответ автора', back_to_all: '← Все проекты', back_to_home: '← Вернуться на главную', back_to_project: '← Вернуться к проекту', error_not_found: 'Проект не найден',
     social_github: 'GitHub', social_telegram: 'Telegram', social_telegram_channel: 'Telegram канал', social_facebook: 'Facebook', social_instagram: 'Instagram',
   },
 };
