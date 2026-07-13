@@ -171,16 +171,18 @@
 
     detailRoot.innerHTML = `
       <div class="app-header">
-        <div class="app-icon">${(p.logo_url || p.image_url) ? `<img src="${esc(p.logo_url || p.image_url)}" style="width:100%;height:100%;object-fit:cover;border-radius:28px;">` : '🛍️'}</div>
-        <div class="app-title">
-          <a href="projects.html" class="back-link" data-i18n="back_to_all">← Barcha loyihalar</a>
-          <h1 id="p-title"></h1>
-          <p class="app-dev">${esc(p.author_name || 'Sardorxon Valiyev')}</p>
-          <div class="app-meta">
-            <div class="app-meta-item"><strong id="p-views">${p.views_count || 0}</strong><span data-i18n="views_label">Ko'rishlar</span></div>
-            <div class="app-meta-item"><strong id="p-category"></strong><span data-i18n="technologies">Kategoriya</span></div>
-            <div class="app-meta-item"><strong>${(p.tags || []).length}</strong><span data-i18n="technologies">Texnologiya</span></div>
+        <a href="projects.html" class="back-link" data-i18n="back_to_all">← Barcha loyihalar</a>
+        <div class="app-header-top">
+          <div class="app-icon">${(p.logo_url || p.image_url) ? `<img src="${esc(p.logo_url || p.image_url)}" style="width:100%;height:100%;object-fit:cover;border-radius:28px;">` : '🛍️'}</div>
+          <div class="app-title">
+            <h1 id="p-title"></h1>
+            <p class="app-dev">${esc(p.author_name || 'Sardorxon Valiyev')}</p>
           </div>
+        </div>
+        <div class="app-meta">
+          <div class="app-meta-item"><strong id="p-views">${p.views_count || 0}</strong><span data-i18n="views_label">Ko'rishlar</span></div>
+          <div class="app-meta-item"><strong>${(p.tags || []).length}</strong><span data-i18n="tech_count_label">Texnologiya</span></div>
+          <div class="app-meta-item"><strong id="p-rating-meta">—</strong><span data-i18n="reviews_label">Sharhlar</span></div>
         </div>
       </div>
 
@@ -214,7 +216,8 @@
 
       <div class="app-section">
         <h2 data-i18n="description">Tavsif</h2>
-        <p id="p-description"></p>
+        <p id="p-description" class="description-clamp"></p>
+        <a href="#" id="read-more-btn" class="read-more-btn hidden" data-i18n="read_more_btn">To'liq o'qish →</a>
       </div>
 
       <div class="app-section">
@@ -250,16 +253,27 @@
     applyStaticStrings();
     bindText(document.getElementById('p-title'), p.title || {});
     bindText(document.getElementById('p-description'), p.description || {});
-    bindText(document.getElementById('p-category'), p.category || {});
 
     document.title = `${p.title?.[getLocale()] || p.slug} | Sardorxon Valiyev`;
 
     document.querySelectorAll('#project-detail .app-header, #project-detail .app-actions, #project-detail .screenshots-row, #project-detail .app-section').forEach(revealAndCursor);
 
+    document.getElementById('read-more-btn').href = `description.html?slug=${encodeURIComponent(p.slug)}`;
+    updateDescriptionClamp();
+
     wireVideoLightbox(p.video_url);
     wireReviews(p.slug);
     wireViewTracking(p.slug);
     wireScreenshotsWheelScroll();
+  }
+
+  // Shows the "To'liq o'qish" link only when the description is actually cut off,
+  // pointing to the dedicated full-description page (Play-Store style).
+  function updateDescriptionClamp() {
+    const el = document.getElementById('p-description');
+    const btn = document.getElementById('read-more-btn');
+    if (!el || !btn) return;
+    btn.classList.toggle('hidden', el.scrollHeight <= el.clientHeight + 2);
   }
 
   // ===== Scroll wheel over screenshots: scroll horizontally first, then hand off to the page =====
@@ -378,6 +392,10 @@
 
     const summary = document.getElementById('reviews-summary');
     const list = document.getElementById('reviews-list');
+
+    const ratingMeta = document.getElementById('p-rating-meta');
+    if (ratingMeta) ratingMeta.textContent = data.count > 0 ? `★ ${data.average.toFixed(1)}` : '—';
+
     if (!summary || !list) return;
 
     if (data.count > 0) {
@@ -421,6 +439,7 @@
     wireLangSwitch(() => {
       refreshBindings();
       if (currentProject) loadReviews(currentProject.slug);
+      updateDescriptionClamp();
     });
 
     await loadProject();
