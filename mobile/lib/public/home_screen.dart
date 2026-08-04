@@ -117,11 +117,12 @@ class _HeroSection extends StatelessWidget {
           const SizedBox(height: 14),
           Text(text, textAlign: TextAlign.center, style: TextStyle(color: Theme.of(context).textTheme.bodyMedium?.color)),
           const SizedBox(height: 24),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          Wrap(
+            alignment: WrapAlignment.center,
+            spacing: 12,
+            runSpacing: 12,
             children: [
               ElevatedButton(onPressed: () => context.go('/projects'), child: Text(locale.t('cta_projects'))),
-              const SizedBox(width: 12),
               OutlinedButton(onPressed: () => context.go('/contact'), child: Text(locale.t('cta_contact'))),
             ],
           ),
