@@ -1,6 +1,7 @@
 const express = require('express');
 const pool = require('../db');
 const { requireAuth } = require('../middleware/auth');
+const { notifyTelegram, escapeHtml } = require('../telegram');
 
 const router = express.Router();
 
@@ -43,6 +44,14 @@ router.post('/projects/:slug/reviews', async (req, res) => {
   const { rows } = await pool.query(
     'INSERT INTO reviews (project_id, name, rating, comment) VALUES ($1, $2, $3, $4) RETURNING *',
     [projRows[0].id, String(name).trim(), ratingNum, String(comment).trim()]
+  );
+
+  notifyTelegram(
+    `⭐ <b>Yangi sharh</b>\n` +
+    `Loyiha: ${escapeHtml(req.params.slug)}\n` +
+    `Ism: ${escapeHtml(name)}\n` +
+    `Baho: ${'★'.repeat(ratingNum)}${'☆'.repeat(5 - ratingNum)}\n` +
+    `Sharh: ${escapeHtml(comment)}`
   );
 
   res.status(201).json(rows[0]);

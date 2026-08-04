@@ -1,6 +1,7 @@
 const express = require('express');
 const pool = require('../db');
 const { requireAuth } = require('../middleware/auth');
+const { notifyTelegram, escapeHtml } = require('../telegram');
 
 const router = express.Router();
 
@@ -18,6 +19,14 @@ router.post('/messages', async (req, res) => {
   const { rows } = await pool.query(
     'INSERT INTO messages (name, email, subject, message) VALUES ($1, $2, $3, $4) RETURNING *',
     [name.trim(), email.trim(), subject.trim(), message.trim()]
+  );
+
+  notifyTelegram(
+    `✉️ <b>Yangi xabar</b>\n` +
+    `Ism: ${escapeHtml(name)}\n` +
+    `Email: ${escapeHtml(email)}\n` +
+    `Mavzu: ${escapeHtml(subject)}\n` +
+    `Xabar: ${escapeHtml(message)}`
   );
 
   res.status(201).json(rows[0]);
