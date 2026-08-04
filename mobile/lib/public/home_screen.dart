@@ -264,7 +264,7 @@ class _FeaturedProjectsSection extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           SizedBox(
-            height: 240,
+            height: 268,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               padding: const EdgeInsets.symmetric(horizontal: 24),

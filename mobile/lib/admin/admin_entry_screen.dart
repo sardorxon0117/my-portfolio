@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../core/auth_provider.dart';
+import 'login_screen.dart';
+import 'admin_shell.dart';
 
-/// Phase 1 placeholder — the real login + 7-tab admin dashboard is Phase 2.
+/// Shows the login form until the stored JWT is confirmed valid, then the
+/// full 7-tab admin dashboard.
 class AdminEntryScreen extends StatelessWidget {
   const AdminEntryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Padding(
-        padding: EdgeInsets.all(24),
-        child: Text(
-          'Admin panel — Phase 2 da qo\'shiladi.',
-          textAlign: TextAlign.center,
-        ),
-      ),
-    );
+    final auth = context.watch<AuthProvider>();
+    if (auth.loading) return const Center(child: CircularProgressIndicator());
+    return auth.isAuthenticated ? const AdminShell() : const LoginScreen();
   }
 }
