@@ -156,11 +156,6 @@ function renderAbout() {
   const about = DATA.content.about || {};
   bindText(document.getElementById('about-p1'), Object.fromEntries(['uz', 'uz_cyr', 'en', 'ru'].map((l) => [l, about[l]?.paragraph1])));
   bindText(document.getElementById('about-p2'), Object.fromEntries(['uz', 'uz_cyr', 'en', 'ru'].map((l) => [l, about[l]?.paragraph2])));
-
-  const photoEl = document.getElementById('about-photo');
-  if (about.photo_url) {
-    photoEl.innerHTML = `<img src="${esc(about.photo_url)}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:26px;">`;
-  }
 }
 
 // ===== Stats =====
@@ -227,16 +222,6 @@ function renderProjects() {
   });
 }
 
-// ===== Marquee =====
-function renderMarquee() {
-  const marquee = DATA.content.marquee || {};
-  const items = marquee[getLocale()] || marquee.uz || [];
-  const doubled = [...items, ...items];
-  const html = doubled.map((s) => `<span>${esc(s)}</span><span class="dot-sep">✦</span>`).join('');
-  document.getElementById('marquee-track-1').innerHTML = html;
-  document.getElementById('marquee-track-2').innerHTML = html;
-}
-
 // ===== Contact + social =====
 function renderContact() {
   const contact = DATA.content.contact || {};
@@ -286,9 +271,8 @@ async function initApp() {
   renderStats();
   renderSkills();
   renderProjects();
-  renderMarquee();
   renderContact();
-  wireLangSwitch(() => { refreshBindings(); renderMarquee(); startHeroTypewriter(document.getElementById('hero-role')); });
+  wireLangSwitch(() => { refreshBindings(); startHeroTypewriter(document.getElementById('hero-role')); });
 }
 
 initApp();
