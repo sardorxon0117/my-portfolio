@@ -110,14 +110,12 @@ ul { list-style: none; }
 ::selection { background: var(--accent); color: var(--accent-ink); }
 
 /* ===== Custom cursor — minimal dot + morphing label ring ===== */
-.cursor-pointer, .cursor-ring {
+.cursor-pointer {
   position: fixed;
   top: 0; left: 0;
   pointer-events: none;
   z-index: 9999;
   will-change: transform;
-}
-.cursor-pointer {
   width: 10px; height: 10px;
   border-radius: 50%;
   background: var(--accent);
@@ -126,28 +124,8 @@ ul { list-style: none; }
 }
 .cursor-pointer svg { display: none; }
 .cursor-pointer.hovering { transform: translate(-50%, -50%) scale(2.2); }
-.cursor-pointer.hidden-cursor { opacity: 0; transform: translate(-50%, -50%) scale(0.4); }
-
-.cursor-ring {
-  width: 88px; height: 88px;
-  border-radius: 50%;
-  background: var(--accent);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transform: translate(-50%, -50%) scale(0);
-  opacity: 0;
-  transition: transform .35s var(--ease), opacity .35s var(--ease);
-}
-.cursor-ring.labeled { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-.cursor-ring #cursor-label {
-  font-size: 0.76rem;
-  font-weight: 600;
-  color: var(--accent-ink);
-  letter-spacing: 0.4px;
-}
 @media (hover: none), (pointer: coarse) {
-  .cursor-pointer, .cursor-ring { display: none; }
+  .cursor-pointer { display: none; }
 }
 @media (hover: hover) and (pointer: fine) {
   * { cursor: none !important; }
@@ -517,25 +495,6 @@ ul { list-style: none; }
   height: calc(100vh - 90px);
   width: min(1160px, 100%);
   margin: 0 auto;
-}
-.hero-stage::before {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 40%;
-  transform: translate(-50%, -50%) scale(0.7);
-  width: min(480px, 50vw);
-  height: min(480px, 50vw);
-  border-radius: 50%;
-  border: 2px solid var(--accent);
-  opacity: 0;
-  z-index: 1;
-  pointer-events: none;
-  animation: ringIn 1.1s var(--ease) forwards;
-  animation-delay: .35s;
-}
-@keyframes ringIn {
-  to { opacity: 0.4; transform: translate(-50%, -50%) scale(1); }
 }
 
 .hero-welcome-bg {

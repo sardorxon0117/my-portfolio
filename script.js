@@ -27,29 +27,25 @@ document.querySelectorAll('.nav-links a').forEach((link) => {
   link.addEventListener('click', () => navbar.classList.remove('open'));
 });
 
-// ===== Custom cursor (brown pointer + "Ko'rish" label morph) =====
+// ===== Custom cursor — a single dot that trails behind the pointer =====
 // Some tablets (iPadOS in particular) report hover:hover/pointer:fine via CSS media
 // features even on pure touch input, so the CSS-only hide can't be trusted there —
-// remove the elements outright based on the more reliable JS touch check.
+// remove the element outright based on the more reliable JS touch check.
 if (isTouchDevice) {
   document.getElementById('cursor-pointer')?.remove();
-  document.getElementById('cursor-ring')?.remove();
 } else {
   const pointer = document.getElementById('cursor-pointer');
-  const ring = document.getElementById('cursor-ring');
-  const cursorLabel = document.getElementById('cursor-label');
   let mx = window.innerWidth / 2, my = window.innerHeight / 2;
-  let rx = mx, ry = my;
+  let px = mx, py = my;
 
   window.addEventListener('mousemove', (e) => {
     mx = e.clientX; my = e.clientY;
-    pointer.style.transform = `translate(${mx}px, ${my}px) translate(-50%, -50%)`;
   });
 
   function animateCursor() {
-    rx += (mx - rx) * 0.2;
-    ry += (my - ry) * 0.2;
-    ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`;
+    px += (mx - px) * 0.2;
+    py += (my - py) * 0.2;
+    pointer.style.transform = `translate(${px}px, ${py}px) translate(-50%, -50%)`;
     requestAnimationFrame(animateCursor);
   }
   animateCursor();
@@ -57,18 +53,6 @@ if (isTouchDevice) {
   document.querySelectorAll('a, button, input, textarea').forEach((el) => {
     el.addEventListener('mouseenter', () => pointer.classList.add('hovering'));
     el.addEventListener('mouseleave', () => pointer.classList.remove('hovering'));
-  });
-
-  document.querySelectorAll('[data-cursor-label]').forEach((el) => {
-    el.addEventListener('mouseenter', () => {
-      cursorLabel.textContent = el.dataset.cursorLabel;
-      ring.classList.add('labeled');
-      pointer.classList.add('hidden-cursor');
-    });
-    el.addEventListener('mouseleave', () => {
-      ring.classList.remove('labeled');
-      pointer.classList.remove('hidden-cursor');
-    });
   });
 }
 
