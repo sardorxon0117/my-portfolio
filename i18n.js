@@ -79,15 +79,45 @@ const UI_STRINGS = {
   },
 };
 
+const LOCALES = ['uz', 'uz_cyr', 'en', 'ru'];
+
+// The URL's own /uz/, /en/... segment is the source of truth for locale
+// (so a shared link opens in the right language); localStorage is only the
+// fallback for URLs that don't carry one, and remembers the choice for next time.
+function getLocaleFromPath() {
+  const seg = location.pathname.split('/').filter(Boolean)[0];
+  return LOCALES.includes(seg) ? seg : null;
+}
 function getLocale() {
-  return localStorage.getItem('site_locale') || 'uz';
+  return getLocaleFromPath() || localStorage.getItem('site_locale') || 'uz';
 }
 function setLocale(loc) {
   localStorage.setItem('site_locale', loc);
+  const parts = location.pathname.split('/').filter(Boolean);
+  if (LOCALES.includes(parts[0])) parts[0] = loc; else parts.unshift(loc);
+  let newPath = '/' + parts.join('/');
+  if (parts.length === 1) newPath += '/';
+  history.pushState({}, '', newPath + location.search + location.hash);
 }
 function t(key) {
   const loc = getLocale();
   return (UI_STRINGS[loc] && UI_STRINGS[loc][key]) || UI_STRINGS.uz[key] || key;
+}
+
+// Rewrites the static index.html/index.html#.../projects.html hrefs left in
+// the markup (nav, logo, "view all projects", back-links, ...) into their
+// locale-prefixed clean-URL equivalent, e.g. index.html#about -> /en/#about.
+function localizeLinks() {
+  const loc = getLocale();
+  document.querySelectorAll('a[href]').forEach((a) => {
+    const href = a.getAttribute('href');
+    if (!href) return;
+    if (href === 'index.html' || href.startsWith('index.html#')) {
+      a.setAttribute('href', `/${loc}/` + href.slice('index.html'.length));
+    } else if (href === 'projects.html') {
+      a.setAttribute('href', `/${loc}/projects`);
+    }
+  });
 }
 
 // ===== Shared across all public pages =====
@@ -95,6 +125,7 @@ function applyStaticStrings() {
   document.querySelectorAll('[data-i18n]').forEach((el) => { el.textContent = t(el.dataset.i18n); });
   document.querySelectorAll('[data-i18n-nav]').forEach((el) => { el.textContent = t(`nav_${el.dataset.i18nNav}`); });
   document.querySelectorAll('[data-i18n-ph]').forEach((el) => { el.placeholder = t(el.dataset.i18nPh); });
+  localizeLinks();
 }
 const LOCALE_SHORT = { uz: 'UZ', uz_cyr: 'ЎЗ', en: 'EN', ru: 'RU' };
 

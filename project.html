@@ -6,7 +6,7 @@
 <title>Loyiha | Sardorxon Valiyev</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&display=swap">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="/style.css">
 </head>
 <body>
 
@@ -79,8 +79,8 @@
   <p>© 2026 Sardorxon Valiyev. <span data-i18n="footer_rights">Barcha huquqlar himoyalangan.</span></p>
 </footer>
 
-<script src="i18n.js"></script>
-<script src="script.js"></script>
+<script src="/i18n.js"></script>
+<script src="/script.js"></script>
 <script>
   function esc(str) {
     return String(str ?? '').replace(/[&<>"']/g, (c) => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
@@ -129,8 +129,7 @@
     return { uz: `${months} oy oldin`, uz_cyr: `${months} ой олдин`, en: `${months} months ago`, ru: `${months} мес. назад` }[loc];
   }
 
-  const params = new URLSearchParams(location.search);
-  const slug = params.get('slug') || params.get('id');
+  const slug = decodeURIComponent(location.pathname.split('/').filter(Boolean).pop() || '');
   const detailRoot = document.getElementById('project-detail');
   let currentProject = null;
 
@@ -262,7 +261,7 @@
 
     document.querySelectorAll('#project-detail .app-header, #project-detail .app-actions, #project-detail .screenshots-row, #project-detail .app-section').forEach(revealAndCursor);
 
-    document.getElementById('read-more-btn').href = `description.html?slug=${encodeURIComponent(p.slug)}`;
+    document.getElementById('read-more-btn').href = `/${getLocale()}/description/${encodeURIComponent(p.slug)}`;
     updateDescriptionClamp();
 
     wireVideoLightbox(p.video_url);

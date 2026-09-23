@@ -1,5 +1,13 @@
 {
+  "redirects": [
+    { "source": "/", "destination": "/uz/", "permanent": false }
+  ],
   "rewrites": [
-    { "source": "/api/:path*", "destination": "/api" }
+    { "source": "/api/:path*", "destination": "/api" },
+    { "source": "/:locale(uz|uz_cyr|en|ru)", "destination": "/index.html" },
+    { "source": "/:locale(uz|uz_cyr|en|ru)/", "destination": "/index.html" },
+    { "source": "/:locale(uz|uz_cyr|en|ru)/projects", "destination": "/projects.html" },
+    { "source": "/:locale(uz|uz_cyr|en|ru)/project/:slug", "destination": "/project.html" },
+    { "source": "/:locale(uz|uz_cyr|en|ru)/description/:slug", "destination": "/description.html" }
   ]
 }

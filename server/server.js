@@ -32,6 +32,25 @@ app.get('/api/health', (req, res) => res.json({ ok: true }));
 
 // Serve the static frontend (project root) and the admin panel
 const ROOT_DIR = path.join(__dirname, '..');
+
+// Locale-prefixed clean URLs (/uz/, /en/projects, /ru/project/:slug, ...) —
+// the page itself is always the same static file; the client reads the
+// locale/slug back out of location.pathname. Falls through (next()) for any
+// first segment that isn't a known locale, so /admin etc. are unaffected.
+const LOCALES = ['uz', 'uz_cyr', 'en', 'ru'];
+function serveIfLocale(file) {
+  return (req, res, next) => {
+    if (!LOCALES.includes(req.params.locale)) return next();
+    res.sendFile(path.join(ROOT_DIR, file));
+  };
+}
+app.get('/:locale', serveIfLocale('index.html'));
+app.get('/:locale/', serveIfLocale('index.html'));
+app.get('/:locale/projects', serveIfLocale('projects.html'));
+app.get('/:locale/project/:slug', serveIfLocale('project.html'));
+app.get('/:locale/description/:slug', serveIfLocale('description.html'));
+app.get('/', (req, res) => res.redirect('/uz/'));
+
 app.use(express.static(ROOT_DIR));
 app.use('/admin', express.static(path.join(ROOT_DIR, 'admin')));
 

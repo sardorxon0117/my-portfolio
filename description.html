@@ -6,7 +6,7 @@
 <title>To'liq tavsif | Sardorxon Valiyev</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&display=swap">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="/style.css">
 </head>
 <body>
 
@@ -77,8 +77,8 @@
   <p>© 2026 Sardorxon Valiyev. <span data-i18n="footer_rights">Barcha huquqlar himoyalangan.</span></p>
 </footer>
 
-<script src="i18n.js"></script>
-<script src="script.js"></script>
+<script src="/i18n.js"></script>
+<script src="/script.js"></script>
 <script>
   function esc(str) {
     return String(str ?? '').replace(/[&<>"']/g, (c) => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
@@ -95,8 +95,7 @@
     bindings.forEach(({ el, i18nMap }) => { el.textContent = i18nMap[loc] || ''; });
   }
 
-  const params = new URLSearchParams(location.search);
-  const slug = params.get('slug');
+  const slug = decodeURIComponent(location.pathname.split('/').filter(Boolean).pop() || '');
   const descRoot = document.getElementById('description-root');
   let currentProject = null;
 
@@ -140,7 +139,7 @@
 
     descRoot.innerHTML = `
       <div class="app-header">
-        <a href="project.html?slug=${encodeURIComponent(p.slug)}" class="back-link" data-i18n="back_to_project">← Loyihaga qaytish</a>
+        <a href="/${getLocale()}/project/${encodeURIComponent(p.slug)}" class="back-link" data-i18n="back_to_project">← Loyihaga qaytish</a>
         <div class="app-header-top">
           <div class="app-icon">${(p.logo_url || p.image_url) ? `<img src="${esc(p.logo_url || p.image_url)}">` : '🛍️'}</div>
           <div class="app-title">

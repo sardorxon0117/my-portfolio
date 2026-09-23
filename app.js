@@ -207,7 +207,7 @@ function renderProjects() {
   container.innerHTML = '';
   DATA.projects.forEach((project, i) => {
     const row = document.createElement('a');
-    row.href = `project.html?slug=${encodeURIComponent(project.slug)}`;
+    row.href = `/${getLocale()}/project/${encodeURIComponent(project.slug)}`;
     row.className = 'project-row reveal';
     row.dataset.cursorLabel = "Ko'rish";
     row.innerHTML = `
