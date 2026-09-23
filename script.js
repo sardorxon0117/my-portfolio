@@ -112,6 +112,7 @@ function onScrollUpdate() {
   progressBar.style.width = `${pct}%`;
 
   navbar.style.top = scrollY > 20 ? '8px' : '16px';
+  navbar.classList.toggle('scrolled', scrollY > 40);
 
   if (sections.length) {
     let currentId = sections[0].id;
