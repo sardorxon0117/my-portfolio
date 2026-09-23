@@ -633,6 +633,12 @@ ul { list-style: none; }
   .hero-welcome-bg span { font-size: clamp(2.4rem, 16vw, 9rem); }
 }
 
+/* Tablet only (phones keep the sizing above) — name and buttons a bit bigger */
+@media (min-width: 601px) and (max-width: 860px) {
+  .hero-title span { font-size: clamp(2.2rem, 6.4vw, 3.6rem); }
+  .hero-caption-right .btn { padding: 16px 28px; font-size: 1.02rem; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero-photo, .hero-welcome-bg span, .hero-title span, .hero-caption-right.hero-buttons {
     animation: none !important; opacity: 1 !important; transform: none !important;
