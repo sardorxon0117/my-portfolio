@@ -272,12 +272,10 @@ ul { list-style: none; }
 }
 .navbar.scrolled {
   background: var(--glass-bg);
-  border-color: var(--glass-border);
-  box-shadow: var(--glass-shadow), inset 0 1px 0 var(--glass-highlight);
   backdrop-filter: blur(20px) saturate(150%);
   -webkit-backdrop-filter: blur(20px) saturate(150%);
 }
-.navbar.open { background: var(--glass-bg); border-color: var(--glass-border); }
+.navbar.open { background: var(--glass-bg); }
 
 .logo {
   font-family: 'Fraunces', serif;
@@ -287,6 +285,8 @@ ul { list-style: none; }
 }
 .logo span { color: var(--accent); }
 
+.nav-right { display: flex; align-items: center; gap: 30px; }
+
 .nav-links { position: relative; display: flex; gap: 2px; }
 .nav-links a {
   position: relative;
@@ -294,7 +294,7 @@ ul { list-style: none; }
   padding: 8px 16px;
   border-radius: 10px;
   font-size: 0.88rem;
-  font-weight: 500;
+  font-weight: 400;
   color: var(--text-1);
   transition: color .3s ease;
 }
@@ -305,34 +305,38 @@ ul { list-style: none; }
   height: 100%;
   border-radius: 10px;
   background: var(--glass-bg-strong);
-  box-shadow: inset 0 1px 0 var(--glass-highlight);
   transition: transform .5s var(--ease), width .5s var(--ease);
   z-index: 1;
 }
 
-.nav-actions { display: flex; align-items: center; gap: 8px; }
+.nav-actions { display: flex; align-items: center; gap: 16px; }
 
 .lang-switch { position: relative; }
 .lang-trigger {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 8px 12px;
-  border-radius: 10px;
+  gap: 5px;
+  padding: 4px 0;
   background: transparent;
-  color: var(--text-0);
-  font-size: 0.78rem;
-  font-weight: 700;
+  border: none;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  font-family: 'Poppins', sans-serif;
+  color: var(--text-1);
+  font-size: 0.8rem;
+  font-weight: 500;
   letter-spacing: 0.3px;
-  transition: background .3s ease;
+  cursor: pointer;
+  transition: color .3s ease;
 }
-.lang-trigger:hover { background: var(--glass-bg-strong); }
-.lang-trigger svg { width: 13px; height: 13px; transition: transform .3s var(--ease); }
+.lang-trigger:hover, .lang-trigger:focus-visible { color: var(--accent); }
+.lang-trigger svg { width: 12px; height: 12px; transition: transform .3s var(--ease); }
 .lang-switch.open .lang-trigger svg { transform: rotate(180deg); }
 
 .lang-panel {
   position: absolute;
-  top: calc(100% + 10px);
+  top: calc(100% + 14px);
   right: 0;
   min-width: 190px;
   padding: 8px;
@@ -340,8 +344,6 @@ ul { list-style: none; }
   background: var(--panel-glass-bg);
   backdrop-filter: blur(32px) saturate(150%);
   -webkit-backdrop-filter: blur(32px) saturate(150%);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -360,33 +362,46 @@ ul { list-style: none; }
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
   padding: 10px 14px;
   border-radius: 9px;
   background: transparent;
+  border: none;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  font-family: 'Poppins', sans-serif;
   color: var(--text-1);
   font-size: 0.85rem;
-  font-weight: 500;
+  font-weight: 400;
   text-align: left;
+  cursor: pointer;
   transition: background .2s ease, color .2s ease;
 }
 .lang-panel button:hover { background: var(--glass-bg); color: var(--text-0); }
-.lang-panel button.active { color: var(--accent); font-weight: 700; }
+.lang-panel button.active { color: var(--accent); font-weight: 600; }
 .lang-panel button.active::after { content: "✓"; }
 
 .icon-btn {
   position: relative;
   width: 40px; height: 40px;
-  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  color: var(--text-0);
-  transition: transform .3s var(--ease), background .3s ease;
+  background: transparent;
+  border: none;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  color: var(--text-1);
+  transition: transform .3s var(--ease), color .3s ease;
   overflow: hidden;
 }
-.icon-btn:hover { transform: translateY(-2px); background: var(--glass-bg-strong); }
+.icon-btn:hover, .icon-btn:focus-visible { transform: translateY(-2px); color: var(--accent); }
 .icon-btn svg { width: 18px; height: 18px; position: absolute; transition: opacity .4s var(--ease), transform .5s var(--ease); }
+.burger.icon-btn { background: var(--glass-bg); border-radius: 10px; }
+.burger.icon-btn:hover { background: var(--glass-bg-strong); color: var(--text-1); }
 
 .icon-sun { opacity: 1; transform: rotate(0deg) scale(1); }
 .icon-moon { opacity: 0; transform: rotate(-90deg) scale(0.5); }
@@ -500,7 +515,7 @@ ul { list-style: none; }
 .hero-stage {
   position: relative;
   height: calc(100vh - 90px);
-  width: min(1160px, 94vw);
+  width: min(1160px, 100%);
   margin: 0 auto;
 }
 .hero-stage::before {
@@ -529,8 +544,7 @@ ul { list-style: none; }
   z-index: 1;
   display: flex;
   align-items: flex-end;
-  justify-content: center;
-  gap: clamp(1px, 0.7vw, 8px);
+  justify-content: space-between;
   padding-bottom: 9%;
   overflow: hidden;
   pointer-events: none;
@@ -646,7 +660,7 @@ ul { list-style: none; }
 
 @media (max-width: 860px) {
   .hero { padding-top: 84px; }
-  .hero-stage { width: min(94vw, 560px); height: calc(100vh - 84px); }
+  .hero-stage { width: min(560px, 100%); height: calc(100vh - 84px); }
   .hero-caption-row { top: 15%; padding: 0 4px; }
   .hero-title span { font-size: clamp(1.3rem, 5.4vw, 1.9rem); }
   .hero-caption-right .btn { padding: 11px 16px; font-size: 0.86rem; min-width: 134px; }
@@ -1387,10 +1401,11 @@ ul { list-style: none; }
   .contact-form { padding: 24px; }
   .navbar { padding: 9px 12px; width: min(94%, 1080px); }
   .logo { font-size: 1.2rem; }
-  .lang-trigger { padding: 6px 8px; font-size: 0.7rem; gap: 4px; }
+  .lang-trigger { padding: 4px 0; font-size: 0.7rem; gap: 4px; }
   .lang-trigger svg { width: 10px; height: 10px; }
   .lang-panel { right: -10px; }
-  .nav-actions { gap: 4px; }
+  .nav-actions { gap: 10px; }
+  .nav-right { gap: 14px; }
   .icon-btn { width: 34px; height: 34px; }
   .icon-btn svg { width: 15px; height: 15px; }
   .app-header { padding-top: 118px; gap: 10px; }

@@ -25,34 +25,36 @@
 
 <header class="navbar">
   <a href="index.html" class="logo">S<span>V</span></a>
-  <nav class="nav-links" id="nav-links">
-    <span class="nav-pill" id="nav-pill"></span>
-    <a href="index.html#home" data-i18n-nav="home">Bosh sahifa</a>
-    <a href="index.html#about" data-i18n-nav="about">Men haqimda</a>
-    <a href="index.html#skills" data-i18n-nav="skills">Ko'nikmalar</a>
-    <a href="projects.html" class="active" data-i18n-nav="projects">Loyihalar</a>
-    <a href="index.html#contact" data-i18n-nav="contact">Aloqa</a>
-  </nav>
-  <div class="nav-actions">
-    <div class="lang-switch" id="lang-switch">
-      <button type="button" class="lang-trigger glass" id="lang-trigger">
-        <span id="lang-current">UZ</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-      </button>
-      <div class="lang-panel">
-        <button type="button" data-locale="uz">O'zbekcha (lotin)</button>
-        <button type="button" data-locale="uz_cyr">Ўзбекча (кирилл)</button>
-        <button type="button" data-locale="en">English</button>
-        <button type="button" data-locale="ru">Русский</button>
+  <div class="nav-right">
+    <nav class="nav-links" id="nav-links">
+      <span class="nav-pill" id="nav-pill"></span>
+      <a href="index.html#home" data-i18n-nav="home">Bosh sahifa</a>
+      <a href="index.html#about" data-i18n-nav="about">Men haqimda</a>
+      <a href="index.html#skills" data-i18n-nav="skills">Ko'nikmalar</a>
+      <a href="projects.html" class="active" data-i18n-nav="projects">Loyihalar</a>
+      <a href="index.html#contact" data-i18n-nav="contact">Aloqa</a>
+    </nav>
+    <div class="nav-actions">
+      <div class="lang-switch" id="lang-switch">
+        <button type="button" class="lang-trigger" id="lang-trigger">
+          <span id="lang-current">UZ</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="lang-panel">
+          <button type="button" data-locale="uz">O'zbekcha (lotin)</button>
+          <button type="button" data-locale="uz_cyr">Ўзбекча (кирилл)</button>
+          <button type="button" data-locale="en">English</button>
+          <button type="button" data-locale="ru">Русский</button>
+        </div>
       </div>
+      <button id="theme-toggle" class="icon-btn" aria-label="Mode almashtirish">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+      </button>
+      <button id="nav-toggle" class="icon-btn glass burger" aria-label="Menyu">
+        <span></span><span></span><span></span>
+      </button>
     </div>
-    <button id="theme-toggle" class="icon-btn glass" aria-label="Mode almashtirish">
-      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-    </button>
-    <button id="nav-toggle" class="icon-btn glass burger" aria-label="Menyu">
-      <span></span><span></span><span></span>
-    </button>
   </div>
 </header>
 
