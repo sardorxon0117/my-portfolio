@@ -477,7 +477,7 @@ ul { list-style: none; }
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 104px 24px 0;
+  padding: 90px 24px 0;
   position: relative;
   overflow: hidden;
 }
@@ -499,8 +499,8 @@ ul { list-style: none; }
    photo just above the WELCOME band, name on the left, buttons on the right ===== */
 .hero-stage {
   position: relative;
-  height: calc(100vh - 104px);
-  width: min(760px, 84vw);
+  height: calc(100vh - 90px);
+  width: min(1160px, 94vw);
   margin: 0 auto;
 }
 .hero-stage::before {
@@ -509,8 +509,8 @@ ul { list-style: none; }
   left: 50%;
   top: 40%;
   transform: translate(-50%, -50%) scale(0.7);
-  width: min(360px, 48vw);
-  height: min(360px, 48vw);
+  width: min(480px, 50vw);
+  height: min(480px, 50vw);
   border-radius: 50%;
   border: 2px solid var(--accent);
   opacity: 0;
@@ -540,8 +540,8 @@ ul { list-style: none; }
   font-family: 'Fraunces', serif;
   font-weight: 800;
   line-height: 1;
-  font-size: clamp(2.8rem, 11vw, 8rem);
-  letter-spacing: -3px;
+  font-size: clamp(3.6rem, 14.5vw, 12.5rem);
+  letter-spacing: -4px;
   color: var(--accent);
   opacity: 0;
   transform: translateY(90px);
@@ -618,9 +618,9 @@ ul { list-style: none; }
 .hero-title span {
   font-family: 'Fraunces', serif;
   font-weight: 700;
-  font-size: clamp(1.4rem, 2.4vw, 2.1rem);
-  line-height: 1.16;
-  letter-spacing: -0.5px;
+  font-size: clamp(1.9rem, 3.4vw, 3.4rem);
+  line-height: 1.14;
+  letter-spacing: -1px;
   opacity: 0;
   transform: translateX(-24px);
   animation: heroSideIn 0.9s var(--ease) forwards;
@@ -639,19 +639,19 @@ ul { list-style: none; }
   animation: heroSideIn 0.9s var(--ease) forwards;
   animation-delay: 0.48s;
 }
-.hero-caption-right .btn { padding: 12px 24px; font-size: 0.86rem; text-align: center; min-width: 168px; }
+.hero-caption-right .btn { padding: 17px 34px; font-size: 1.05rem; text-align: center; min-width: 220px; }
 @keyframes heroSideIn {
   to { opacity: 1; transform: none; }
 }
 
 @media (max-width: 860px) {
-  .hero { padding-top: 96px; }
-  .hero-stage { width: min(92vw, 460px); height: calc(100vh - 96px); }
-  .hero-caption-row { top: 16%; padding: 0 4px; }
-  .hero-title span { font-size: clamp(1.05rem, 4.4vw, 1.4rem); }
-  .hero-caption-right .btn { padding: 9px 14px; font-size: 0.74rem; min-width: 118px; }
-  .hero-welcome-bg { padding-bottom: 6%; }
-  .hero-welcome-bg span { font-size: clamp(1.8rem, 13vw, 3.6rem); }
+  .hero { padding-top: 84px; }
+  .hero-stage { width: min(94vw, 560px); height: calc(100vh - 84px); }
+  .hero-caption-row { top: 15%; padding: 0 4px; }
+  .hero-title span { font-size: clamp(1.3rem, 5.4vw, 1.9rem); }
+  .hero-caption-right .btn { padding: 11px 16px; font-size: 0.86rem; min-width: 134px; }
+  .hero-welcome-bg { padding-bottom: 5%; }
+  .hero-welcome-bg span { font-size: clamp(2.2rem, 16vw, 4.6rem); }
 }
 
 @media (prefers-reduced-motion: reduce) {
