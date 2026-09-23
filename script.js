@@ -1,35 +1,6 @@
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-// ===== Preloader =====
-document.body.classList.add('loading');
-const preloader = document.getElementById('preloader');
-const preloaderFill = document.getElementById('preloader-fill');
-const preloaderNum = document.getElementById('preloader-num');
-
-function runPreloader() {
-  const duration = reduceMotion ? 200 : 1500;
-  const start = performance.now();
-  function tick(now) {
-    const t = Math.min(1, (now - start) / duration);
-    const eased = 1 - Math.pow(1 - t, 2);
-    const pct = Math.round(eased * 100);
-    preloaderFill.style.width = `${pct}%`;
-    preloaderNum.textContent = pct;
-    if (t < 1) {
-      requestAnimationFrame(tick);
-    } else {
-      setTimeout(() => {
-        preloader.classList.add('done');
-        document.body.classList.remove('loading');
-        setTimeout(() => preloader.classList.add('hidden'), reduceMotion ? 0 : 900);
-      }, 200);
-    }
-  }
-  requestAnimationFrame(tick);
-}
-runPreloader();
-
 // ===== Theme toggle (light / dark) with localStorage persistence =====
 const root = document.documentElement;
 const themeToggle = document.getElementById('theme-toggle');

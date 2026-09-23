@@ -10,16 +10,6 @@
 </head>
 <body>
 
-<div class="preloader" id="preloader">
-  <div class="preloader-inner">
-    <div class="preloader-name">Sardorxon<span class="accent-text">.</span></div>
-    <div class="preloader-bar"><span id="preloader-fill"></span></div>
-    <div class="preloader-count"><span id="preloader-num">0</span>%</div>
-  </div>
-  <div class="preloader-panel panel-left"></div>
-  <div class="preloader-panel panel-right"></div>
-</div>
-
 <div class="cursor-pointer" id="cursor-pointer">
   <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 3l15 6.5-6.4 2.1L11 18z"/></svg>
 </div>
@@ -32,7 +22,6 @@
   <span class="blob blob-2"></span>
   <span class="blob blob-3"></span>
 </div>
-<div class="grain"></div>
 
 <header class="navbar glass">
   <a href="#home" class="logo" data-nav="home">S<span>V</span></a>
@@ -109,7 +98,11 @@
       <div class="about-card reveal" data-reveal data-reveal-dir="right">
         <p id="about-p1"></p>
         <p id="about-p2"></p>
-        <div class="stats" id="stats-container"></div>
+        <div class="stats" id="stats-container">
+          <div class="skel-stat"><span class="skel"></span><span class="skel"></span></div>
+          <div class="skel-stat"><span class="skel"></span><span class="skel"></span></div>
+          <div class="skel-stat"><span class="skel"></span><span class="skel"></span></div>
+        </div>
       </div>
     </div>
   </section>
@@ -121,7 +114,12 @@
       <p class="eyebrow center reveal" data-reveal data-i18n="skills_eyebrow">Texnologiyalar</p>
       <h2 class="reveal" data-reveal data-i18n="skills_heading">Ko'nikmalarim</h2>
     </div>
-    <div class="skills-list" id="skills-container"></div>
+    <div class="skills-list" id="skills-container">
+      <div class="skel-skill"><span class="skel skel-icon"></span><div class="skel-body"><span class="skel"></span><span class="skel"></span></div></div>
+      <div class="skel-skill"><span class="skel skel-icon"></span><div class="skel-body"><span class="skel"></span><span class="skel"></span></div></div>
+      <div class="skel-skill"><span class="skel skel-icon"></span><div class="skel-body"><span class="skel"></span><span class="skel"></span></div></div>
+      <div class="skel-skill"><span class="skel skel-icon"></span><div class="skel-body"><span class="skel"></span><span class="skel"></span></div></div>
+    </div>
   </section>
 
   <!-- PROJECTS -->
@@ -131,7 +129,10 @@
       <p class="eyebrow center reveal" data-reveal data-i18n="projects_eyebrow">Ishlarim</p>
       <h2 class="reveal" data-reveal data-i18n="projects_heading">Men qilgan ishlar</h2>
     </div>
-    <div class="project-rows" id="projects-container"></div>
+    <div class="project-rows" id="projects-container">
+      <div class="skel-project"><span class="skel skel-visual"></span><div class="skel-info"><span class="skel"></span><span class="skel"></span><span class="skel"></span><span class="skel"></span></div></div>
+      <div class="skel-project"><span class="skel skel-visual"></span><div class="skel-info"><span class="skel"></span><span class="skel"></span><span class="skel"></span><span class="skel"></span></div></div>
+    </div>
     <div class="projects-more reveal" data-reveal>
       <a href="projects.html" class="btn btn-ghost glass"><span data-i18n="view_all_projects">Barcha loyihalarni ko'rish →</span></a>
     </div>

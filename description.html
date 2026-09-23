@@ -10,16 +10,6 @@
 </head>
 <body>
 
-<div class="preloader" id="preloader">
-  <div class="preloader-inner">
-    <div class="preloader-name">Sardorxon<span class="accent-text">.</span></div>
-    <div class="preloader-bar"><span id="preloader-fill"></span></div>
-    <div class="preloader-count"><span id="preloader-num">0</span>%</div>
-  </div>
-  <div class="preloader-panel panel-left"></div>
-  <div class="preloader-panel panel-right"></div>
-</div>
-
 <div class="cursor-pointer" id="cursor-pointer">
   <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 3l15 6.5-6.4 2.1L11 18z"/></svg>
 </div>
@@ -32,7 +22,6 @@
   <span class="blob blob-2"></span>
   <span class="blob blob-3"></span>
 </div>
-<div class="grain"></div>
 
 <header class="navbar glass">
   <a href="index.html" class="logo">S<span>V</span></a>
@@ -68,7 +57,19 @@
 </header>
 
 <main id="description-root">
-  <!-- Filled dynamically -->
+  <div class="skel-detail-header">
+    <span class="skel" style="width:140px;height:0.85rem;"></span>
+    <div class="skel-detail-top">
+      <span class="skel skel-detail-icon"></span>
+      <div class="skel-detail-title"><span class="skel"></span><span class="skel"></span></div>
+    </div>
+  </div>
+  <div class="skel-detail-section">
+    <span class="skel"></span>
+    <span class="skel skel-line"></span>
+    <span class="skel skel-line"></span>
+    <span class="skel skel-line" style="width:70%;"></span>
+  </div>
 </main>
 
 <footer class="footer glass">
