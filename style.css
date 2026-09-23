@@ -633,10 +633,20 @@ ul { list-style: none; }
   .hero-welcome-bg span { font-size: clamp(2.4rem, 16vw, 9rem); }
 }
 
-/* Tablet only (phones keep the sizing above) — name and buttons a bit bigger */
+/* Phone only — the photo/WELCOME block no longer fills a full-viewport-tall
+   stage (it was width-constrained, so most of that height sat empty above
+   it); sizing the stage to the photo's own aspect ratio and pinning the
+   hero to the top removes that dead space. Name is also 1.4x bigger. */
+@media (max-width: 600px) {
+  .hero { min-height: 0; justify-content: flex-start; padding-bottom: 48px; }
+  .hero-stage { height: auto; aspect-ratio: 720 / 807; }
+  .hero-title span { font-size: clamp(2.4rem, 9vw, 3.9rem); }
+}
+
+/* Tablet only (phones keep the sizing above) — name 1.5x, buttons 1.4x bigger */
 @media (min-width: 601px) and (max-width: 860px) {
-  .hero-title span { font-size: clamp(2.2rem, 6.4vw, 3.6rem); }
-  .hero-caption-right .btn { padding: 16px 28px; font-size: 1.02rem; }
+  .hero-title span { font-size: clamp(3.3rem, 9.6vw, 5.4rem); }
+  .hero-caption-right .btn { padding: 22px 39px; font-size: 1.43rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
